@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-// import About from './Components/About';
+import About from './Components/About';
 import Alert from './Components/Alert';
 // import Footer from './Components/Footer';
 import Navbar from './Components/Navbar';
 import TextForm from './Components/TextForm';
-// import {
-//     BrowserRouter as Router,
-//     Routes,
-//     Route
-//   } from "react-router-dom";
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route
+  } from "react-router-dom";
 // i disabled this router becouse github not work proper with router 
 
   
@@ -45,20 +45,21 @@ function APP() {
     }
     return ( 
         <div>
-            {/* <Router> */}
+            <Router>
             <Navbar mode={Mode} toggleMode={toggleMode} linkPages={linkPages}/>
             <Alert alert={alert}/>
             
             <div className="container">
-                    {/* <Routes>
+                    <Routes>
                         <Route exact path='/about' element={<About/>}/>
                         <Route exact path='/' element={<TextForm heading="Type Text Here To Analyse" mode={Mode} showalert={showalert}/>}/>
-                    </Routes> */}
-                <TextForm heading="Type Text Here To Analyse" mode={Mode} showalert={showalert}/>
+                    </Routes>
+
+                {/* <TextForm heading="Type Text Here To Analyse" mode={Mode} showalert={showalert}/> */}
             </div>
 
             {/* <Footer/> */}
-            {/* </Router> */}
+            </Router>
         </div>
         );
 }

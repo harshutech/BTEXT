@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 // i disabled this router becouse github not work proper with router 
 
 function Navbar(props) {
@@ -10,10 +10,10 @@ function Navbar(props) {
         <div className="container-fluid">
           <img
             className="navbar-brand rounded-4"
-            src="./logo.png"
+            src="logo.png"
             width={120}
             height={50}
-            
+            alt={"BTEXT"}
           />
           <button
             className="navbar-toggler"
@@ -29,18 +29,18 @@ function Navbar(props) {
           <div className="collapse navbar-collapse " id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a
-                  className={`nav-link active text-${props.linkPages}`}
+                <Link
+                  className={`nav-link text-${props.linkPages}`}
                   aria-current="page"
-                  href="#"
+                  to="/"
                 >
                   Home
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className={`nav-link text-${props.linkPages}`} href="#">
+                <Link className={`nav-link text-${props.linkPages}`} to="/about">
                   About
-                </a>
+                </Link>
               </li>
             </ul>
             <form className="d-flex">

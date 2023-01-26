@@ -1,62 +1,55 @@
-import React,{useState} from "react";
-import PropTypes from 'prop-types';
-
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 function TextForm(props) {
+  const [text, setText] = useState("");
 
-    const [text, setText] = useState("");
+  // to upper case
+  const handleUpClick = () => {
+    let newtext = text.toUpperCase();
+    setText(newtext);
+    props.showalert("Conveted to UpperCase", "success");
+  };
 
-    // to upper case
-    const  handleUpClick=()=>{
-        let newtext = text.toUpperCase();
-        setText(newtext);
-      props.showalert("Conveted to UpperCase", "success")
+  // to lower case
+  const handleLoWClick = () => {
+    let newtext = text.toLowerCase();
+    setText(newtext);
+    props.showalert("conveted to LowerCase", "success");
+  };
 
-    }
+  // to copy text
 
-    // to lower case
-    const handleLoWClick=()=>{
-        let newtext = text.toLowerCase();
-        setText(newtext);
-      props.showalert("conveted to LowerCase", "success")
+  const handlecopy = () => {
+    navigator.clipboard.writeText(text);
+    document.getSelection().removeAllRanges();
+    props.showalert("Text copied ✅", "success");
+  };
 
-    }
+  // to remove extra spaces
+  const handleExtraSpaces = () => {
+    let newtext = text.split(/[ ]+/);
+    setText(newtext.join(" "));
+    props.showalert("Extra spaces removed ", "success");
+  };
 
-    // to copy text
+  // to reset
+  const reset = () => {
+    setText("");
+    props.showalert("Reseted", "success");
+  };
 
-    const handlecopy=()=>{
-      var text = document.getElementById("mybox")
-      text.select();
-      text.setSelectionRange(0,9999);
-      navigator.clipboard.writeText(text.value);
-      props.showalert("Text copied ✅", "success")
-    }
+  // to listen input
+  const handleOnChange = (event) => {
+    setText(event.target.value);
+  };
 
-    // to remove extra spaces
-    const handleExtraSpaces=()=>{
-      let newtext =text.split(/[ ]+/);
-      setText(newtext.join(" "))
-      props.showalert("Extra spaces removed ", "success")
-
-    }
-
-    // to reset
-    const reset=()=>{
-        setText("");
-      props.showalert("Reseted", "success")
-
-    }
-    
-    // to listen input
-    const handleOnChange=(event)=>{
-        setText(event.target.value);
-    }
-
-
-    return (
+  return (
     <div>
       <div className="mb-3 my-5 container">
-        <h2 className={`text-${props.mode ==='light' ? 'dark': 'white'}`}>{props.heading}</h2>
+        <h2 className={`text-${props.mode === "light" ? "dark" : "white"}`}>
+          {props.heading}
+        </h2>
         <textarea
           className="form-control"
           id="mybox"
@@ -65,31 +58,70 @@ function TextForm(props) {
           onChange={handleOnChange}
           placeholder="Type here..."
         ></textarea>
-        
+
         <div>
-        <button className="btn btn-primary my-4 m-1" onClick={handleUpClick}>Convert to UperCase</button>
+          <button
+            className="btn btn-primary my-1 m-1"
+            onClick={handleUpClick}
+            disabled={text.length === 0}
+          >
+            Convert to UperCase
+          </button>
 
-        <button className="btn btn-primary my-4 m-1" onClick={handleLoWClick}>Convert to LowerCase</button>
+          <button
+            className="btn btn-primary my-1 m-1"
+            onClick={handleLoWClick}
+            disabled={text.length === 0}
+          >
+            Convert to LowerCase
+          </button>
 
-        <button className="btn btn-primary my-4 m-1" onClick={handleExtraSpaces}>Remove extra spaces</button>
+          <button
+            className="btn btn-primary my-1 m-1"
+            onClick={handleExtraSpaces}
+            disabled={text.length === 0}
+          >
+            Remove extra spaces
+          </button>
 
-        <button className="btn btn-primary my-4 m-1" onClick={handlecopy}>Copy text</button>
+          <button
+            className="btn btn-primary my-1 m-1"
+            onClick={handlecopy}
+            disabled={text.length === 0}
+          >
+            Copy text
+          </button>
 
-        <button className="btn btn-success my-4 m-1" onClick={reset}>Reset</button>
-
+          <button
+            className="btn btn-success my-1 m-1"
+            onClick={reset}
+            disabled={text.length === 0}
+          >
+            Reset
+          </button>
         </div>
       </div>
       <div className="mb-3 my-5 container">
         <h2>Your text Summary</h2>
-        <p><b>{text.split(" ").length-1}</b> words and <b>{text.length}</b> Characters.</p>
-        <p>Reading time <b>{0.008 * text.split("").length}</b> Minitues.</p>
+        <p>
+          <b>
+            {
+              text.split(/\s+/).filter((element) => {
+                return element.length !== 0;
+              }).length
+            }
+          </b>{" "}
+          words and <b>{text.length}</b> Characters.
+        </p>
+        <p>
+          Reading time <b>{0.008 * text.split("").length}</b> Minitues.
+        </p>
       </div>
     </div>
   );
-
 }
-TextForm.propTypes={
-    heading : PropTypes.string.isRequired,
-}
+TextForm.propTypes = {
+  heading: PropTypes.string.isRequired,
+};
 
 export default TextForm;
